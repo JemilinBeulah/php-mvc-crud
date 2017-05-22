@@ -1,7 +1,7 @@
 <?php
-class Chats extends Controller{
+class Chats extends Controller{ 
     protected function Index(){
-		$viewmodel = new ShareModel();
+		$viewmodel = new ChatModel();
 		$this->returnView($viewmodel->Index(), true);
 	}
 

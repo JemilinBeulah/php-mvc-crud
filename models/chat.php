@@ -1,7 +1,7 @@
 <?php
 class ChatModel extends Model{
     public function Index(){
-		$this->query('SELECT * FROM chat ORDER BY create_date DESC');
+		$this->query('SELECT * FROM chats ORDER BY create_date DESC');
 		$rows = $this->resultSet();
 		return $rows;
     }
@@ -11,15 +11,13 @@ class ChatModel extends Model{
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
 
 		if($post['submit']){
-			if($post['title'] == '' || $post['body'] == '' || $post['link'] == ''){
+			if($post['message'] == ''){
 				Messages::setMsg('Please Fill In All Fields', 'error');
 				return;
 			}
 			// Insert into MySQL
-			$this->query('INSERT INTO shares (title, body, link, user_id) VALUES(:title, :body, :link, :user_id)');
-			$this->bind(':title', $post['title']);
-			$this->bind(':body', $post['body']);
-			$this->bind(':link', $post['link']);
+			$this->query('INSERT INTO chats (message, user_id) VALUES(:message, :user_id)');
+			$this->bind(':message', $post['message']);
 			$this->bind(':user_id', 1);
 			$this->execute();
 			// Verify
